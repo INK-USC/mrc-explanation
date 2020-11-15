@@ -248,7 +248,7 @@ def to_tensor(lst):
     ret = []
     for item in lst:
         if not isinstance(item, torch.Tensor):
-            ret.append(torch.tensor(item, dtype=torch.float).cuda())
+            ret.append(torch.tensor(item, dtype=torch.float))
         else:
             ret.append(item)
     return torch.stack(ret)
@@ -258,7 +258,7 @@ def _and(lst, soft):
     if soft:
         lst = to_tensor(lst)
         if len(lst) > 0:
-            return torch.max(torch.sum(lst) - (len(lst) - 1), torch.tensor(0.0).cuda())
+            return torch.max(torch.sum(lst) - (len(lst) - 1), torch.tensor(0.0))
         else:
             return 1.0
     else:
@@ -384,7 +384,7 @@ def left_or_right(args, key, w, inputs):
     pretrained_modules = inputs['pretrained_modules']
     occurrences_of_key = find(ref_q, key, s, {}, pretrained_modules, soft, inputs)
     occurrences_of_w = find(ref_q, w, s, {}, pretrained_modules, soft, inputs)
-    max_prob = torch.tensor(0.0).cuda()
+    max_prob = torch.tensor(0.0)
     for okey in occurrences_of_key:
         for ow in occurrences_of_w:
             if args['direction'] == 'left':
@@ -399,7 +399,7 @@ def left_or_right(args, key, w, inputs):
                 prob1 = leq(dist, args['dist'], soft)
                 current_prob = _and([current_prob, prob1, okey.confidence, ow.confidence], soft)
             if isinstance(current_prob, float):
-                current_prob = torch.tensor(current_prob).cuda()
+                current_prob = torch.tensor(current_prob)
             max_prob = torch.max(max_prob, current_prob)
     return max_prob
 
@@ -415,7 +415,7 @@ def between(args, keys, w, inputs):
     occurrences_of_key2 = find(ref_q, key2, s, {}, pretrained_modules, soft, inputs)
     occurrences_of_w = find(ref_q, w, s, {}, pretrained_modules, soft, inputs)
 
-    max_prob = torch.tensor(0.0).cuda()
+    max_prob = torch.tensor(0.0)
     for okey1 in occurrences_of_key1:
         for okey2 in occurrences_of_key2:
             for ow in occurrences_of_w:
@@ -427,7 +427,7 @@ def between(args, keys, w, inputs):
                     d3 = distance(okey2, ow)
                     current_prob = _and([eq(d2, 0, soft), eq(d3, 0, soft), current_prob], soft)
                 if isinstance(current_prob, float):
-                    current_prob = torch.tensor(current_prob).cuda()
+                    current_prob = torch.tensor(current_prob)
                 max_prob = torch.max(max_prob, current_prob)
     return max_prob
 

@@ -141,6 +141,7 @@ def main():
 
     if opt['save_ans_func']:
         for idx, ans_func in ans_funcs:
+            ans_func.delete_redundant_rules()
             ans_func.clean_rules() # lambda functions cannot be binarized.
         pickle.dump(ans_funcs, open(opt['ans_func_file'], 'wb'))
         logger.info('Dumped {} ans funcs to {}'.format(len(ans_funcs), opt['ans_func_file']))
