@@ -82,6 +82,7 @@ def main():
     all_answers = ansFunc.answer(squad_instance, pretrained_modules=None, soft=False, thres=1.0)
 
     answer_tokenized = ' '.join([item.text for item in squad_instance.answer_tokens[0]])
+    validated = False
     if len(all_answers) == 1:
         one_answer = all_answers[0]
         validated = exact_match(one_answer['Answer'].span, answer_tokenized)
