@@ -2,7 +2,7 @@
 
 **TL;DR**: We **collect human explanations** that justifies their answering decisions when doing QA task; We **transform** these explanations **into executable “teacher” programs**; We use programs to **annotate unlabeled QA examples** and train a “student” QA model.
 
-**Project homepage**: [https://github.com/INK-USC/mrc-explanation-project](https://github.com/INK-USC/mrc-explanation-project)
+**Project homepage**: [http://inklab.usc.edu/mrc-explanation-project/](http://inklab.usc.edu/mrc-explanation-project/)
 
 
 ### Configure Environment
